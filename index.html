@@ -1,0 +1,177 @@
+<html !DOCTYPE>
+
+<head>
+<link rel="stylesheet" href="css/bootstrap.css" />
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+function startTime() {
+    var today = new Date();
+    var h = today.getUTCHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('time').innerHTML =
+    h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+</script>
+
+</head>
+
+<body onload="startTime()">
+
+<div class="container-fluid">
+  <div class="row">
+		<div class="col-lg-6 col-xs-6">
+
+			<h1 style="color: red;"><u>Situation</u></h1>
+			<h3>What is happing / What has happened?</h3>
+				<ul class="lead">
+					<li>Type of Distress?</li>
+					<li>Location?</li>
+					<li>Number of Persons?</li>
+					<li>How Long Ago?</li>
+					<li>Other Information?</li>
+				</ul>
+			
+			<h1 style="color: red;"><u>Mission</u></h1>
+			<h3>What are we going to do?</h3>
+				<ul class="lead">
+					<li>Search</li>
+					<li>Tow</li>
+					<li>Casualty Care</li>
+					<li>Transfer</li>
+					<li>Other</li>
+				</ul>
+			
+			
+			
+			<h1 style="color: red;"><u>Execution</u></h1>
+			<h3>What needs to be done?</h3>
+				<ul class="lead">
+					<li>Boat Kit Checklist</li>
+					<li>Navigation Checklist</li>
+					<li>Communication Checklist</li>
+					<li>Launch Vehicle Checklist</li>
+				</ul>
+			
+			<h1 style="color: red;"><u>Administration</u></h1>
+			<table class="table" id="maintable" > 
+				<thead> 
+					<tr> 
+						<th>Type</th> 
+						<th>Description</th> 
+						<th>Reporter</th> 
+						<th>Mech Aware</th> 
+						<th>Status</th> 
+						<th>Remove</th>
+					</tr> 
+				</thead> 
+			
+				<tbody> 
+					<tr> 
+							<td>
+								<select> 
+								<option>Defect</option>
+								<option>Information</option>
+								<option>Danger</option>
+								</select>
+							</td> 
+							<td><textarea rows="3" cols="100" type="text" class="form-control" id="description" placeholder="Description"></textarea></td> 
+							<td><input type="text" class="form-control" id="reporter" placeholder="Name"></td> 
+							<td>
+								<select> 
+									<option>No</option>
+									<option>Yes</option>
+									<option>Not Applicable</option>
+								</select>
+							</td>
+							<td>
+								<select> 
+									<option>Not Started</option>
+									<option>In Progress</option>
+								</select>
+							</td>
+							<td>
+								<button class="btn btn-danger" onclick="deleteRow(this)"><i class="glyphicon glyphicon-remove"></i></button>
+							</td>
+					</tr> 
+				</tbody> 
+			</table>
+			<button id="add_new" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+			
+			<h1 style="color: red;"><u>Command / Communication / Confirm</u></h1>
+				<ul class="lead">
+					<li>Final Confirm</li>
+					<li>Questions?</li>
+				</ul>
+			
+			<div id="ais">
+			<h1><u>AIS</u></h1>
+				<script type="text/javascript"> 
+					width='100%'; // the width of the embedded map in pixels or percentage 
+					height='500';	// the height of the embedded map in pixels or percentage 
+					border='0';	// the width of the border around the map (zero means no border) 
+					shownames='true';	// to display ship names on the map (true or false) 
+					latitude='56.0632';	// the latitude of the center of the map, in decimal degrees 
+					longitude='-002.7184';	// the longitude of the center of the map, in decimal degrees 
+					zoom='11';	// the zoom level of the map (values between 2 and 17) 
+					maptype='0';	// use 0 for Normal map, 1 for Satellite, 2 for Hybrid, 3 for Terrain 
+					trackvessel='0';	// MMSI of a vessel (note: vessel will be displayed only if within range of the system) - overrides "zoom" option 
+				</script> 
+
+				<script type="text/javascript" src="http://www.marinetraffic.com/js/embed.js"></script>
+			</div>	
+				
+		</div>
+		
+		<div class="col-lg-6 col-xs-6">
+			<span><h1>UTC Time: <span id="time" style="color: red;"></span></h1></span>
+			
+			<h1><u>Weather &amp; Tides</u></h1>
+			<iframe src="http://www.bbc.co.uk/weather/coast_and_sea/tide_tables/7/223#tide-details" scrolling="no" frameborder="0" width="100%" height="360"></iframe>
+
+			<iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#iw2" scrolling="no" frameborder="0" width="370" height="360"></iframe>
+		<!--
+			<iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#inshoreWatersGeneralSection" scrolling="no" frameborder="0" width="380" height="150"></iframe>
+		-->		
+			<iframe src="http://www.metoffice.gov.uk/public/weather/surface-pressure/#wxMain" scrolling="no" frameborder="0" width="100%" height="810"></iframe>
+
+		</div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$("#add_new").click(function () { 
+
+    $("#maintable").each(function () {
+       
+        var tds = '<tr>';
+        jQuery.each($('tr:last td', this), function () {
+            tds += '<td>' + $(this).html() + '</td>';
+        });
+        tds += '</tr>';
+        if ($('tbody', this).length > 0) {
+            $('tbody', this).append(tds);
+        } else {
+            $(this).append(tds);
+        }
+    });
+});
+
+function deleteRow(o) {
+     var p = o.parentNode.parentNode;
+         p.parentNode.removeChild(p);
+    }
+    
+</script>
+    
+</body>
+
+</html>
