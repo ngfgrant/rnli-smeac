@@ -5,64 +5,107 @@
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-function startTime() {
-    var today = new Date();
-    var h = today.getUTCHours();
-    var m = today.getMinutes();
-    var s = today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('time').innerHTML =
-    h + ":" + m + ":" + s;
-    var t = setTimeout(startTime, 500);
-}
-function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-    return i;
-}
+	function startTime() {
+    	var today = new Date();
+    	var h = today.getUTCHours();
+    	var m = today.getMinutes();
+    	var s = today.getSeconds();
+    	m = checkTime(m);
+    	s = checkTime(s);
+    	document.getElementById('time').innerHTML =
+   		h + ":" + m + ":" + s;
+    	var t = setTimeout(startTime, 500);
+	}
+	
+	function checkTime(i) {
+    	if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    	return i;
+	}
+
+	function refreshiframe() {
+		var tides = document.getElementById("tides");
+		tides.src = tides.src;
+		
+		var forecast = document.getElementById("forecast");
+		forecast.src = forecast.src;
+		
+		
+		scroll(0,0);
+	}
 </script>
 
 </head>
 
-<body onload="startTime()">
+<body onload="startTime(); setInterval(refreshiframe, 3600000)">
 
 <div class="container-fluid">
-  <div class="row">
-		<div class="col-lg-6 col-xs-6">
 
+  <div class="row">
+		<div class="col-md-3">
 			<h1 style="color: red;"><u>Situation</u></h1>
 			<h3>What is happing / What has happened?</h3>
+			<div class="col-md-6">
 				<ul class="lead">
 					<li>Type of Distress?</li>
 					<li>Location?</li>
 					<li>Number of Persons?</li>
+				
+				</ul>
+			</div>
+			
+			<div class="col-md-6">
+				<ul class="lead">
 					<li>How Long Ago?</li>
 					<li>Other Information?</li>
 				</ul>
+			</div>
 			
+				
+			<div class="clearfix"></div>
 			<h1 style="color: red;"><u>Mission</u></h1>
 			<h3>What are we going to do?</h3>
+			
+			<div class="col-md-6">
 				<ul class="lead">
 					<li>Search</li>
 					<li>Tow</li>
 					<li>Casualty Care</li>
+				</ul>
+			</div>
+						
+			<div class="col-md-6">
+				<ul class="lead">
 					<li>Transfer</li>
 					<li>Other</li>
 				</ul>
-			
+			</div>
+				
+			<div class="clearfix"></div>
 			
 			
 			<h1 style="color: red;"><u>Execution</u></h1>
 			<h3>What needs to be done?</h3>
+			<div class="col-md-6">
 				<ul class="lead">
 					<li>Boat Kit Checklist</li>
 					<li>Navigation Checklist</li>
+				</ul>
+			</div>
+			
+			<div class="col-md-6">
+				<ul class="lead">
 					<li>Communication Checklist</li>
 					<li>Launch Vehicle Checklist</li>
 				</ul>
+			</div>
 			
+			<div class="clearfix"></div>
+
+		</div>
+		
+		<div class="col-md-4">
 			<h1 style="color: red;"><u>Administration</u></h1>
-			<table class="table" id="maintable" > 
+			<table class="table" id="adminTable" > 
 				<thead> 
 					<tr> 
 						<th>Type</th> 
@@ -75,44 +118,96 @@ function checkTime(i) {
 				</thead> 
 			
 				<tbody> 
-					<tr> 
-							<td>
-								<select> 
-								<option>Defect</option>
-								<option>Information</option>
-								<option>Danger</option>
-								</select>
-							</td> 
-							<td><textarea rows="3" cols="100" type="text" class="form-control" id="description" placeholder="Description"></textarea></td> 
-							<td><input type="text" class="form-control" id="reporter" placeholder="Name"></td> 
-							<td>
-								<select> 
-									<option>No</option>
-									<option>Yes</option>
-									<option>Not Applicable</option>
-								</select>
-							</td>
-							<td>
-								<select> 
-									<option>Not Started</option>
-									<option>In Progress</option>
-								</select>
-							</td>
-							<td>
-								<button class="btn btn-danger" onclick="deleteRow(this)"><i class="glyphicon glyphicon-remove"></i></button>
-							</td>
+					<tr>
+					
+						
 					</tr> 
 				</tbody> 
 			</table>
-			<button id="add_new" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add New</button>
 			
+			
+		<form name="admin" id="admin">
+			
+			<div class="form-group">
+    			<label for="type">Type</label>
+       			<select id="type" name="type"> 
+					<option>Defect</option>
+					<option>Information</option>
+					<option>Danger</option>
+				</select>
+			</div>
+			
+			<div class="form-group">
+    			<label for="description">Description</label>
+				<textarea id="description" name="description" rows="3" cols="100" type="text" class="form-control" placeholder="Description"></textarea>
+	    	</div>
+	    	
+	    	<div class="form-group">
+    			<label for="reporter">Reporter</label>
+	    		<input id="reporter" name="reporter" type="text" class="form-control" placeholder="Name"> 				
+			</div>
+			
+			<div class="form-group">
+    			<label for="mechanicAware">Mechanic Aware</label>					
+       			<select id="mechanicAware" name="mechanicAware"> 
+					<option>No</option>
+					<option>Yes</option>
+					<option>Not Applicable</option>
+				</select>
+			</div>	
+				
+			<div class="form-group">
+    			<label for="status">Status</label>							
+				<select id="status" name="status"> 
+					<option>Not Started</option>
+					<option>In Progress</option>
+				</select>
+       		</div>
+        
+        <button type="button" onClick="updateForm();" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+        <input type="reset" name="reset" id="resetbtn" class="btn btn-danger" value="Reset" />
+    </form>
+				
+											
 			<h1 style="color: red;"><u>Command / Communication / Confirm</u></h1>
 				<ul class="lead">
 					<li>Final Confirm</li>
 					<li>Questions?</li>
 				</ul>
-			
-			<div id="ais">
+
+
+		</div>
+		
+		<div class="col-md-5">
+			<div>
+			<span><h1>UTC Time: <span id="time" style="color: red;"></span></h1></span>
+		
+			<h1><u>Weather &amp; Tides</u></h1>
+			<iframe id="tides" name="tides" src="http://www.bbc.co.uk/weather/coast_and_sea/tide_tables/7/223#tide-details" scrolling="no" frameborder="0" width="100%" height="360"></iframe>
+			<!--			
+			<iframe name="pressureChart" id="pressureChart" src="http://www.metoffice.gov.uk/public/weather/surface-pressure/#wxMain" scrolling="no" frameborder="0" width="100%" height="810"></iframe>
+			-->			
+		<!--
+			<iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#iw2" scrolling="no" frameborder="0" width="370" height="360"></iframe>
+		-->
+		<!--
+			<iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#inshoreWatersGeneralSection" scrolling="no" frameborder="0" width="380" height="150"></iframe>
+		-->		
+		
+		<div id="forecast">
+  			<iframe id="forcast" name="forecast" src="http://www.metoffice.gov.uk/public/weather/forecast/gcynfjhev#fcContent" scrolling="no" frameborder="0" width="90%" height="750"></iframe>
+  		</div>
+		
+		
+			</div>
+		</div>
+  </div>
+  
+  
+  <div class="row">
+  	<div class="col-md-12">
+
+  		<div id="ais">
 			<h1><u>AIS</u></h1>
 				<script type="text/javascript"> 
 					width='100%'; // the width of the embedded map in pixels or percentage 
@@ -128,50 +223,44 @@ function checkTime(i) {
 
 				<script type="text/javascript" src="http://www.marinetraffic.com/js/embed.js"></script>
 			</div>	
-				
-		</div>
-		
-		<div class="col-lg-6 col-xs-6">
-			<span><h1>UTC Time: <span id="time" style="color: red;"></span></h1></span>
-			
-			<h1><u>Weather &amp; Tides</u></h1>
-			<iframe src="http://www.bbc.co.uk/weather/coast_and_sea/tide_tables/7/223#tide-details" scrolling="no" frameborder="0" width="100%" height="360"></iframe>
-
-			<iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#iw2" scrolling="no" frameborder="0" width="370" height="360"></iframe>
-		<!--
-			<iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#inshoreWatersGeneralSection" scrolling="no" frameborder="0" width="380" height="150"></iframe>
-		-->		
-			<iframe src="http://www.metoffice.gov.uk/public/weather/surface-pressure/#wxMain" scrolling="no" frameborder="0" width="100%" height="810"></iframe>
-
-		</div>
+  	</div>
   </div>
 </div>
 
+
 <script type="text/javascript">
-$("#add_new").click(function () { 
+		function deleteRow(o) {
+    		var p = o.parentNode.parentNode;
+         	p.parentNode.removeChild(p);
+    	}
 
-    $("#maintable").each(function () {
-       
-        var tds = '<tr>';
-        jQuery.each($('tr:last td', this), function () {
-            tds += '<td>' + $(this).html() + '</td>';
-        });
-        tds += '</tr>';
-        if ($('tbody', this).length > 0) {
-            $('tbody', this).append(tds);
-        } else {
-            $(this).append(tds);
+        function updateForm() {
+        
+            var type = document.getElementById("type").value;
+            var description = document.getElementById("description").value;
+            var reporter = document.getElementById("reporter").value;   
+            var mechanicAware = document.getElementById("mechanicAware").value;
+            var status = document.getElementById("status").value; 
+            var table=document.getElementById("adminTable");
+            
+            var row=table.insertRow(-1);
+            var cell1=row.insertCell(0);
+            var cell2=row.insertCell(1);
+            var cell3=row.insertCell(2);
+            var cell4=row.insertCell(3);
+            var cell5=row.insertCell(4);
+            var cell6=row.insertCell(5);
+                        
+            cell1.innerHTML=type;
+            cell2.innerHTML=description;        
+            cell3.innerHTML=reporter;  
+            cell4.innerHTML=mechanicAware;
+            cell5.innerHTML=status;    
+            cell6.innerHTML="<button  id=\"remove\" name=\"remove\" class=\"btn btn-danger\" onclick=\"deleteRow(this)\"><i class=\"glyphicon glyphicon-remove\"></i></button>";    
         }
-    });
-});
-
-function deleteRow(o) {
-     var p = o.parentNode.parentNode;
-         p.parentNode.removeChild(p);
-    }
-    
+window.alert(typeStyle);
 </script>
-    
+
 </body>
 
 </html>
