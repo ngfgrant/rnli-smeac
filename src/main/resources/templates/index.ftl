@@ -1,6 +1,7 @@
 <html !DOCTYPE>
 
 <head>
+<meta http-equiv="refresh" content="10">
 <link rel="stylesheet" href="css/bootstrap.css" />
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
 
@@ -16,27 +17,35 @@
    		h + ":" + m + ":" + s;
     	var t = setTimeout(startTime, 500);
 	}
-	
 	function checkTime(i) {
     	if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
     	return i;
 	}
-
-	function refreshiframe() {
-		var tides = document.getElementById("tides");
-		tides.src = tides.src;
-		
-		var forecast = document.getElementById("forecast");
-		forecast.src = forecast.src;
-		
-		
-		scroll(0,0);
-	}
 </script>
+
+<script type="text/javascript">
+	function startLocalTime() {
+    	var todayl = new Date();
+    	var hl = todayl.getHours();
+    	var ml = todayl.getMinutes();
+    	var sl = todayl.getSeconds();
+    	ml = checkLocalTime(ml);
+    	sl = checkLocalTime(sl);
+    	document.getElementById('localTime').innerHTML =
+   		hl + ":" + ml + ":" + sl;
+    	var tl = setTimeout(startLocalTime, 500);
+	}
+	
+	function checkLocalTime(i) {
+    	if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    	return i;
+	}
+</script>	
+	
 
 </head>
 
-<body onload="startTime(); setInterval(refreshiframe, 3600000)">
+<body onload="startTime(); startLocalTime()">
 
 <div class="container-fluid">
 
@@ -180,8 +189,10 @@
 		
 		<div class="col-md-5">
 			<div>
-			<span><h1>UTC Time: <span id="time" style="color: red;"></span></h1></span>
-		
+			
+			<span><h1>UTC Time: <span id="time" style="color: red;"></span></h1><span><h1>Local Time: <span id="localTime" style="color: red;"></span></h1></span></span>
+			
+			
 			<h1><u>Weather &amp; Tides</u></h1>
 			<iframe id="tides" name="tides" src="http://www.bbc.co.uk/weather/coast_and_sea/tide_tables/7/223#tide-details" scrolling="no" frameborder="0" width="100%" height="360"></iframe>
 			<!--			
@@ -258,7 +269,7 @@
             cell5.innerHTML=status;    
             cell6.innerHTML="<button  id=\"remove\" name=\"remove\" class=\"btn btn-danger\" onclick=\"deleteRow(this)\"><i class=\"glyphicon glyphicon-remove\"></i></button>";    
         }
-window.alert(typeStyle);
+
 </script>
 
 </body>
