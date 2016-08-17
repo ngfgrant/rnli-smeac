@@ -1,0 +1,1 @@
+echo 'POCSAG512: Address: 1013692  Function: 0  Alpha:   System Test POCSAG512: Address:       0  Function: 0  Alpha:   <DEL><DEL><DEL>ß<DEL> POCSAG512: Address: 1013692  Function: 0  Alpha:   4ß POCSAG512: Address: 1774337  Function: 2 POCSAG512: Address: 2038713  Function: 1 POCSAG512: Address: 1013692  Function: 0  Alpha:   System Test' | nc -w 10 -u localhost 9876
