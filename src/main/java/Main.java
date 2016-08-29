@@ -6,20 +6,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.Version;
 import model.Admin;
-import spark.Request;
-import spark.Spark;
+import model.Contact;
+import model.PagerMessage;
+import pager.UdpServer;
+import services.TaskService;
 
 import static spark.Spark.*;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
-    private static final int HTTP_BAD_REQUEST = 400;
-
     /*
     JSON setup
      */
@@ -39,11 +39,18 @@ public class Main {
         /*
         Config
          */
+        Contact contact = new Contact("Niall Grant", "447969848782");
+        Contact.contactList.add(contact);
+
+        staticFileLocation("/templates");
         final Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/");
-        staticFileLocation("/");
+        port(9090);
 
         Admin admin = new Admin();
+        PagerMessage pagerMessage = new PagerMessage();
+
+
 
         /*
         Demo Data
@@ -65,7 +72,25 @@ public class Main {
                 Template resultTemplate = configuration.getTemplate("templates/index.ftl");
                 Map<String, Object> map = new HashMap<>();
                 map.put("adminList", admin.getAllAdminItems());
+
+                map.put("pagerMessage", pagerMessage.pagerMessages);
+
                 resultTemplate.process(map, writer);
+            } catch (Exception e) {
+                halt(500);
+            }
+
+            return writer;
+        });
+
+        get("/contact", (request, response) -> {
+
+            StringWriter writer = new StringWriter();
+
+            try {
+                Template resultTemplate = configuration.getTemplate("templates/contact.ftl");
+
+                resultTemplate.process(null, writer);
             } catch (Exception e) {
                 halt(500);
             }
@@ -98,6 +123,23 @@ public class Main {
             response.status(201); // 201 Created
             response.redirect("/");
             return tempAdmin.getId();
+        });
+
+        post("/contact", (request, response) -> {
+
+            String name = request.queryParams("name");
+            String number = request.queryParams("number");
+            Contact newContact = new Contact(name, number);
+            Contact.contactList.add(newContact);
+
+            for (Contact tempContact : Contact.contactList) {
+                System.out.println(tempContact.getName());
+                System.out.println(tempContact.getPhoneNumber() + "\n");
+            }
+
+            response.status(201); // 201 Created
+            response.redirect("/");
+            return newContact.getName();
         });
 
         put("/admin/:id", (request, response) -> {
@@ -165,5 +207,44 @@ public class Main {
             return "Admin item not found";
         });
 
+        get("/pagerMessages", (request, response) -> {
+            response.status(200);
+            response.type("application/json");
+            return dataToJson(pagerMessage.pagerMessages.toArray());
+
+        });
+
+        get("/clearPagerMessages", (request, response) -> {
+
+            pagerMessage.pagerMessages.clear();
+
+            response.status(200);
+            response.redirect("/");
+            return "Pager Messages Cleared";
+
+        });
+
+        get("/refreshMessages", (request, response) -> {
+
+            StringBuilder htmlBuilder = new StringBuilder();
+            htmlBuilder.append("<h2> <span class='blink_me red'>");
+            htmlBuilder.append(pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getMessage())
+                    .append("</span> - <span class='red'>")
+                    .append(pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getTimestampFormatted())
+                    .append(" (Local) </span></h2>");
+
+            return htmlBuilder.toString();
+        });
+/*
+        Timer time = new Timer(); // Instantiate Timer Object
+        TaskService st = new TaskService(pagerMessage); // Instantiate SheduledTask class
+        time.schedule(st, 0, 1000*60); // Create Repetitively task for every 1 secs
+*/
+        UdpServer udpServer = new UdpServer();
+        try {
+            udpServer.init(pagerMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,1 +1,1 @@
-rtl_fm -f 153.075M -M fm -g 19.3 -l -60 -p 3  -s 22050 | sox -t raw -esigned-integer -b16 -r 48000 - -esigned-integer -b16 -r 22050 -t raw - | sox -t raw -esigned-integer -b16 -r 48000 - -esigned-integer -b16 -r 22050 -t raw - | multimon-ng -t raw -a POCSAG512 -a POCSAG1200 -a POCSAG2400 -f alpha - | nc -w 10 -u localhost 9876 | tee pager_output.txt 
+rtl_fm -f 153.075M -M fm -g 60.7 -l 60 -p 3 -E dc -s 22050 - | multimon-ng -t raw -a POCSAG512 -a POCSAG1200 -a POCSAG2400 -f alpha - | nc -u -v localhost 9876
