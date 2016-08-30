@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 /**
  * Created by niallgrant on 11/08/16.
  */
-public class Admin {
+public class AdministrationItem {
 
     public UUID id;
     public String timestamp;
@@ -16,9 +16,9 @@ public class Admin {
     public String description;
     public String status;
     public String mechanicAware;
-    public Map<UUID, Admin> adminItems = new HashMap<UUID, Admin>();
+    public Map<UUID, AdministrationItem> adminItems = new HashMap<UUID, AdministrationItem>();
 
-    public Admin(String type, String reporter, String description, String status, String mechanicAware) {
+    public AdministrationItem(String type, String reporter, String description, String status, String mechanicAware) {
         this.id = UUID.randomUUID();
         this.timestamp = setTimestamp();
         this.type = type;
@@ -28,16 +28,16 @@ public class Admin {
         this.mechanicAware = mechanicAware;
     }
 
-    public Admin (){
+    public AdministrationItem(){
 
     }
     public UUID createAdminItem(String type, String reporter, String description, String status, String mechanicAware) {
-        Admin adminItem = new Admin(type, reporter, description, status, mechanicAware);
-        adminItems.put(adminItem.getId(), adminItem);
+        AdministrationItem administrationItemItem = new AdministrationItem(type, reporter, description, status, mechanicAware);
+        adminItems.put(administrationItemItem.getId(), administrationItemItem);
         return id;
     }
 
-    public List<Admin> getAllAdminItems() {
+    public List<AdministrationItem> getAllAdminItems() {
         return adminItems.keySet().stream().sorted().map(adminItems::get).collect(Collectors.toList());
     }
 

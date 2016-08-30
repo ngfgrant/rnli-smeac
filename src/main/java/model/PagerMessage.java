@@ -9,15 +9,48 @@ import java.util.*;
  */
 public class PagerMessage {
 
-    public Timestamp timestamp;
-    public String message;
+    private Timestamp timestamp;
+    private String fullMessage;
+    private String alpha;
+    private String function;
+    private String address;
+    private String pagerFormatEncoding;
     public List<PagerMessage> pagerMessages = new ArrayList<PagerMessage>();
 
-    public PagerMessage(Timestamp timestamp, String message) {
+    public PagerMessage(Timestamp timestamp, String fullMessage) {
+        this.fullMessage = fullMessage;
         this.timestamp = timestamp;
-        this.message = message;
+        this.pagerFormatEncoding = getFirstWord(fullMessage);
+        this.address = splitMessage(fullMessage,"Address: ","Function:");
+        this.function = splitMessage(fullMessage, "Function: ", "Alpha:");
+        this.alpha = splitMessage(fullMessage, "Alpha:   ", "POCSAG");
     }
+
     public PagerMessage() {
+    }
+
+    private String getFirstWord(String text) {
+        if (text.indexOf(' ') > -1) { // Check if there is more than one word.
+            return text.substring(0, text.indexOf(":")); // Extract first word.
+        } else {
+            return text; // Text is the first word itself.
+        }
+    }
+
+    private String splitMessage(String message, String splitTextFrom, String splitTextTo) {
+        String[] split = message.split(splitTextFrom);
+        String pagerMessageString = split[1];
+        String[] split2 = pagerMessageString.split(splitTextTo);
+        String pagerMessageString2 = split2[0];
+        return pagerMessageString2.toUpperCase();
+    }
+
+    public String getFullMessage() {
+        return fullMessage;
+    }
+
+    public void setFullMessage(String fullMessage) {
+        this.fullMessage = fullMessage;
     }
 
     public Timestamp getTimestamp() {
@@ -32,12 +65,35 @@ public class PagerMessage {
         this.timestamp = timestamp;
     }
 
-    public String getMessage() {
-        return message;
+    public String getAlpha() {
+        return alpha;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setAlpha(String alpha) {
+        this.alpha = alpha;
     }
 
+    public String getPagerFormatEncoding() {
+        return pagerFormatEncoding;
+    }
+
+    public void setPagerFormatEncoding(String pagerFormatEncoding) {
+        this.pagerFormatEncoding = pagerFormatEncoding;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getFunction() {
+        return function;
+    }
+
+    public void setFunction(String function) {
+        this.function = function;
+    }
 }

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rnlismeac</groupId>
     <artifactId>rnlismeac</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
     <name>rnlismeac</name>
     <packaging>jar</packaging>
     <url>http://maven.apache.org</url>

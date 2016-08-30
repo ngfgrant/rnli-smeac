@@ -6,18 +6,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import model.Admin;
+import model.AdministrationItem;
 import model.Contact;
 import model.PagerMessage;
 import pager.UdpServer;
-import services.TaskService;
 
 import static spark.Spark.*;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class Main {
     /*
@@ -41,25 +39,14 @@ public class Main {
          */
         Contact contact = new Contact("Niall Grant", "447969848782");
         Contact.contactList.add(contact);
-
         staticFileLocation("/templates");
         final Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/");
         port(9090);
 
-        Admin admin = new Admin();
+        AdministrationItem administrationItem = new AdministrationItem();
         PagerMessage pagerMessage = new PagerMessage();
 
-
-
-        /*
-        Demo Data
-
-        for (int x = 0; x < 10; x++) {
-            Admin tempAdmin = new Admin("a" + x, "a" + x, "a" + x, "a" + x, "a" + x);
-            admin.adminItems.put(tempAdmin.getId(), tempAdmin);
-        }
- */
         /*
         Routes
          */
@@ -71,7 +58,7 @@ public class Main {
             try {
                 Template resultTemplate = configuration.getTemplate("templates/index.ftl");
                 Map<String, Object> map = new HashMap<>();
-                map.put("adminList", admin.getAllAdminItems());
+                map.put("adminList", administrationItem.getAllAdminItems());
 
                 map.put("pagerMessage", pagerMessage.pagerMessages);
 
@@ -79,14 +66,11 @@ public class Main {
             } catch (Exception e) {
                 halt(500);
             }
-
             return writer;
         });
 
         get("/contact", (request, response) -> {
-
             StringWriter writer = new StringWriter();
-
             try {
                 Template resultTemplate = configuration.getTemplate("templates/contact.ftl");
 
@@ -94,64 +78,53 @@ public class Main {
             } catch (Exception e) {
                 halt(500);
             }
-
             return writer;
         });
 
 
         // Gets all available admin resources (ids)
         get("/admin", (request, response) -> {
-
             response.status(200);
             response.type("application/json");
-            return dataToJson(admin.getAllAdminItems());
-
+            return dataToJson(administrationItem.getAllAdminItems());
         });
 
         post("/admin", (request, response) -> {
-
             String type = request.queryParams("type");
             String reporter = request.queryParams("reporter");
             String description = request.queryParams("description");
             String status = request.queryParams("status");
             String mechanicAware = request.queryParams("mechanicAware");
-            Admin tempAdmin = new Admin(type, reporter, description, status, mechanicAware);
-
-
-            admin.adminItems.put(tempAdmin.getId(), tempAdmin);
-
+            AdministrationItem tempAdministrationItem = new AdministrationItem(type, reporter, description, status, mechanicAware);
+            administrationItem.adminItems.put(tempAdministrationItem.getId(), tempAdministrationItem);
             response.status(201); // 201 Created
             response.redirect("/");
-            return tempAdmin.getId();
+            return tempAdministrationItem.getId();
         });
 
         post("/contact", (request, response) -> {
-
             String name = request.queryParams("name");
             String number = request.queryParams("number");
             Contact newContact = new Contact(name, number);
             Contact.contactList.add(newContact);
-
             for (Contact tempContact : Contact.contactList) {
                 System.out.println(tempContact.getName());
                 System.out.println(tempContact.getPhoneNumber() + "\n");
             }
-
             response.status(201); // 201 Created
             response.redirect("/");
             return newContact.getName();
         });
 
         put("/admin/:id", (request, response) -> {
-
             String id = request.params(":id");
-
-            Admin tempAdmin = new Admin();
-            for (Admin tempAdmin1 : admin.adminItems.values()) {
-                if (String.valueOf(tempAdmin1.getId()).equals(id)) {
-                    tempAdmin = tempAdmin1;
+            AdministrationItem tempAdministrationItem = new AdministrationItem();
+            for (AdministrationItem tempAdministrationItem1 : administrationItem.adminItems.values()) {
+                if (String.valueOf(tempAdministrationItem1.getId()).equals(id)) {
+                    tempAdministrationItem = tempAdministrationItem1;
                 }
             }
+
             String newType = request.queryParams("type");
             String newReporter = request.queryParams("reporter");
             String newDescription = request.queryParams("description");
@@ -159,30 +132,28 @@ public class Main {
             String newMechanicAware = request.queryParams("mechanicAware");
 
             if (newType != null) {
-                tempAdmin.setType(newType);
+                tempAdministrationItem.setType(newType);
             }
             if (newReporter != null) {
-                tempAdmin.setReporter(newReporter);
+                tempAdministrationItem.setReporter(newReporter);
             }
             if (newDescription != null) {
-                tempAdmin.setDescription(newDescription);
+                tempAdministrationItem.setDescription(newDescription);
             }
             if (newStatus != null) {
-                tempAdmin.setStatus(newStatus);
+                tempAdministrationItem.setStatus(newStatus);
             }
             if (newMechanicAware != null) {
-                tempAdmin.setMechanicAware(newMechanicAware);
+                tempAdministrationItem.setMechanicAware(newMechanicAware);
             }
             return "Admin item with id '" + id + "' updated " + newType + " " + newStatus;
         });
 
         delete("/admin/:id", (request, response) -> {
-
             String id = request.params(":id");
-
-            for (Admin tempAdmin1 : admin.adminItems.values()) {
-                if (String.valueOf(tempAdmin1.getId()).equals(id)) {
-                    admin.adminItems.remove(tempAdmin1.getId());
+            for (AdministrationItem tempAdministrationItem1 : administrationItem.adminItems.values()) {
+                if (String.valueOf(tempAdministrationItem1.getId()).equals(id)) {
+                    administrationItem.adminItems.remove(tempAdministrationItem1.getId());
                     response.status(200);
                     return "Admin item with id '" + id + "' deleted";
                 }
@@ -195,9 +166,9 @@ public class Main {
 
             String id = request.params(":id");
 
-            for (Admin tempAdmin1 : admin.adminItems.values()) {
-                if (String.valueOf(tempAdmin1.getId()).equals(id)) {
-                    admin.adminItems.remove(tempAdmin1.getId());
+            for (AdministrationItem tempAdministrationItem1 : administrationItem.adminItems.values()) {
+                if (String.valueOf(tempAdministrationItem1.getId()).equals(id)) {
+                    administrationItem.adminItems.remove(tempAdministrationItem1.getId());
                     response.status(200);
                     return "Admin item with id '" + id + "' deleted";
                 }
@@ -211,35 +182,26 @@ public class Main {
             response.status(200);
             response.type("application/json");
             return dataToJson(pagerMessage.pagerMessages.toArray());
-
         });
 
         get("/clearPagerMessages", (request, response) -> {
-
             pagerMessage.pagerMessages.clear();
-
             response.status(200);
             response.redirect("/");
             return "Pager Messages Cleared";
-
         });
 
         get("/refreshMessages", (request, response) -> {
-
             StringBuilder htmlBuilder = new StringBuilder();
             htmlBuilder.append("<h2> <span class='blink_me red'>");
-            htmlBuilder.append(pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getMessage())
+            htmlBuilder.append(pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getAlpha())
                     .append("</span> - <span class='red'>")
                     .append(pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getTimestampFormatted())
                     .append(" (Local) </span></h2>");
 
             return htmlBuilder.toString();
         });
-/*
-        Timer time = new Timer(); // Instantiate Timer Object
-        TaskService st = new TaskService(pagerMessage); // Instantiate SheduledTask class
-        time.schedule(st, 0, 1000*60); // Create Repetitively task for every 1 secs
-*/
+
         UdpServer udpServer = new UdpServer();
         try {
             udpServer.init(pagerMessage);
