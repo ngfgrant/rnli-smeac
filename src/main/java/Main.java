@@ -43,6 +43,7 @@ public class Main {
         final Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/");
         port(9090);
+        PagerMessage.initialiseForbiddenAlphaTextList();
 
         AdministrationItem administrationItem = new AdministrationItem();
         PagerMessage pagerMessage = new PagerMessage();

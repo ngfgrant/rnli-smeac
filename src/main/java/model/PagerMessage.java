@@ -16,6 +16,7 @@ public class PagerMessage {
     private String address;
     private String pagerFormatEncoding;
     public List<PagerMessage> pagerMessages = new ArrayList<PagerMessage>();
+    private static List<String> alphaCleaner = new ArrayList<String>();
 
     public PagerMessage(Timestamp timestamp, String fullMessage) {
         this.fullMessage = fullMessage;
@@ -23,7 +24,7 @@ public class PagerMessage {
         this.pagerFormatEncoding = getFirstWord(fullMessage);
         this.address = splitMessage(fullMessage,"Address: ","Function:");
         this.function = splitMessage(fullMessage, "Function: ", "Alpha:");
-        this.alpha = splitMessage(fullMessage, "Alpha:   ", "POCSAG");
+        this.alpha = cleanAlphaText(fullMessage);
     }
 
     public PagerMessage() {
@@ -44,6 +45,23 @@ public class PagerMessage {
         String pagerMessageString2 = split2[0];
         return pagerMessageString2.toUpperCase();
     }
+    public static void initialiseForbiddenAlphaTextList() {
+        alphaCleaner.add("<NUL>");
+        alphaCleaner.add("<ENQ>");
+        alphaCleaner.add("<");
+        alphaCleaner.add(">");
+    }
+
+    private String cleanAlphaText(String fullMessage){
+        String tempAlpha = splitMessage(fullMessage, "Alpha:   ", "POCSAG");
+        for (String forbiddenAlphaText : alphaCleaner){
+            if(tempAlpha.contains(forbiddenAlphaText)){
+                tempAlpha = tempAlpha.replace(forbiddenAlphaText,"");
+            }
+        }
+        return tempAlpha;
+    }
+
 
     public String getFullMessage() {
         return fullMessage;
