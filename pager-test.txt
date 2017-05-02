@@ -1,1 +1,3 @@
 echo 'POCSAG512: Address: 1013692  Function: 0  Alpha:   System Test | nc -w 10 -u localhost 9876
+
+SYSTEM TEST ITTER TEST   437224  FUNCTION: 0  LPHA:   LAUNCH ILB<NUL>

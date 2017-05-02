@@ -86,13 +86,13 @@
         });
     </script>
 
-
 </head>
 
 <body onload="startTime(); startLocalTime(); pageToTop()">
 
 <div class="container-fluid">
 
+<!-- Time and Messages -->
 <div class="row">
     <div class="col-md-4">
         <div id="pager">
@@ -112,76 +112,64 @@
     </div>
 </div>
 
+<!-- SMEAC -->
 <div class="row">
+<!-- Situation -->
 <div class="col-md-2">
     <h1 style="color: blue;"><u>Situation</u></h1>
 
-    <h3>What is happing / What has happened?</h3>
+    <h3>What has happened?</h3>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <ul class="lead">
-            <li>Type of Distress?</li>
-            <li>Location?</li>
-            <li>Number of Persons?</li>
-
+            <li>What?</li>
+            <li>Where?</li>
+            <li>When?</li>
+            <li>How?</li>
+            <li># of Persons?</li>
+            <li>Other Info?</li>
         </ul>
     </div>
+</div>
 
-    <div class="col-md-6">
-        <ul class="lead">
-            <li>How Long Ago?</li>
-            <li>Other Information?</li>
-        </ul>
-    </div>
+<!-- Mission -->
+<div class="col-md-2">
 
-
-    <div class="clearfix"></div>
     <h1 style="color: blue;"><u>Mission</u></h1>
 
-    <h3>What are we going to do?</h3>
+    <h3>What are we doing?</h3>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <ul class="lead">
             <li>Search</li>
             <li>Tow</li>
             <li>Casualty Care</li>
-        </ul>
-    </div>
-
-    <div class="col-md-6">
-        <ul class="lead">
             <li>Transfer</li>
             <li>Other</li>
         </ul>
     </div>
-
-    <div class="clearfix"></div>
-
-
-    <h1 style="color: blue;"><u>Execution</u></h1>
-
-    <h3>What needs to be done?</h3>
-
-    <div class="col-md-6">
-        <ul class="lead">
-            <li>Boat Kit Checklist</li>
-            <li>Navigation Checklist</li>
-            <li>Communication Checklist</li>
-        </ul>
-    </div>
-
-    <div class="col-md-6">
-        <ul class="lead">
-
-            <li>Launch Vehicle Checklist</li>
-        </ul>
-    </div>
-
-    <div class="clearfix"></div>
-
 </div>
 
-<div class="col-md-5">
+<!-- Execution -->
+<div class="col-md-2">
+    <h1 style="color: blue;"><u>Execution</u></h1>
+
+    <h3>What Needs Done?</h3>
+
+    <div class="col-md-12">
+        <ul class="lead">
+            <li>Boat Kit / PPE</li>
+            <li>Navigation</li>
+            <li>Communication</li>
+            <li>Weather Breifing</li>
+            <li>Launch</li>
+            <li>Other</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Admin -->
+<div class="col-md-4">
     <h1 style="color: blue;"><u>Administration</u></h1>
 <#if adminList?has_content>
 
@@ -297,43 +285,57 @@
         <input type="reset" name="reset" id="resetbtn" class="btn btn-danger" value="Reset"/>
     </form>
 
+</div>
 
-    <h1 style="color: blue;"><u>Command / Communication / Confirm</u></h1>
+<!-- Confirm -->
+<div class="col-md-2">
+    <h1 style="color: blue;"><u>Confirm</u></h1>
     <ul class="lead">
-        <li>Final Confirm</li>
+        <li>Launch Authority?</li>
+        <li>Roles?</li>
+        <li>Communication?</li>
+        <li>Kit</li>
         <li>Questions?</li>
     </ul>
-
+</div>
 
 </div>
 
-<div class="col-md-5">
-    <div>
+<!-- Weather -->
+<div class="row">
+    <div class="col-md-6">
         <h1><u>Weather (Local) &amp; Tides (UTC)</u></h1>
-        <iframe id="tides" name="tides" src="http://www.bbc.co.uk/weather/coast_and_sea/tide_tables/7/223#tide-details"
-                scrolling="no" frameborder="0" width="100%" height="360"></iframe>
-        <!--
-        <iframe name="pressureChart" id="pressureChart" src="http://www.metoffice.gov.uk/public/weather/surface-pressure/#wxMain" scrolling="no" frameborder="0" width="100%" height="810"></iframe>
-        -->
-        <!--
-            <iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#iw2" scrolling="no" frameborder="0" width="370" height="360"></iframe>
-        -->
-        <!--
-            <iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#inshoreWatersGeneralSection" scrolling="no" frameborder="0" width="380" height="150"></iframe>
-        -->
 
+        <div>
+
+            <iframe id="tides" name="tides"
+                    src="http://www.bbc.co.uk/weather/coast_and_sea/tide_tables/7/223#tide-details"
+                    scrolling="no" frameborder="0" width="100%" height="360"></iframe>
+            <!--
+            <iframe name="pressureChart" id="pressureChart" src="http://www.metoffice.gov.uk/public/weather/surface-pressure/#wxMain" scrolling="no" frameborder="0" width="100%" height="810"></iframe>
+            -->
+            <!--
+                <iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#iw2" scrolling="no" frameborder="0" width="370" height="360"></iframe>
+            -->
+            <!--
+                <iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#inshoreWatersGeneralSection" scrolling="no" frameborder="0" width="380" height="150"></iframe>
+            -->
+
+            <!-- http://www.metoffice.gov.uk/public/weather/forecast/gcynfjhev#fcContent -->
+
+        </div>
+    </div>
+
+    <div class="col-md-6">
         <div id="forecast">
             <iframe id="forcast" name="forecast"
-                    src="http://www.metoffice.gov.uk/public/weather/forecast/gcynfjhev#fcContent" scrolling="no"
-                    frameborder="0" width="90%" height="750"></iframe>
+                    src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters-printable#content" scrolling="no"
+                    frameborder="0" width="100%" height="450"></iframe>
         </div>
-
-
     </div>
 </div>
-</div>
 
-
+<!-- AIS -->
 <div class="row">
     <div class="col-md-12">
 

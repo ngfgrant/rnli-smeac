@@ -46,6 +46,7 @@ public class Main {
         PagerMessage.initialiseForbiddenAlphaTextList();
 
         AdministrationItem administrationItem = new AdministrationItem();
+
         PagerMessage pagerMessage = new PagerMessage();
 
         /*

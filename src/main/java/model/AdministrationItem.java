@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -7,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Created by niallgrant on 11/08/16.
  */
-public class AdministrationItem {
+public class AdministrationItem implements Serializable {
 
     public UUID id;
     public String timestamp;
@@ -97,5 +98,7 @@ public class AdministrationItem {
     public String getTimestamp() {
         return timestamp;
     }
+
+
 }
 
