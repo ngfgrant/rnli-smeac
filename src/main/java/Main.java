@@ -9,7 +9,9 @@ import freemarker.template.Template;
 import model.AdministrationItem;
 import model.Contact;
 import model.PagerMessage;
+import org.w3c.dom.Document;
 import pager.UdpServer;
+import services.WeatherForecastService;
 
 import static spark.Spark.*;
 
@@ -70,6 +72,14 @@ public class Main {
             }
             return writer;
         });
+
+        get("/met-office", (request, response) -> {
+            response.status(200);
+            response.type("text/xml");
+            WeatherForecastService weatherForecastService = new WeatherForecastService();
+            return weatherForecastService.getInshoreWeather();
+        });
+
 
         get("/contact", (request, response) -> {
             StringWriter writer = new StringWriter();
