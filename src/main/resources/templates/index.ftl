@@ -407,7 +407,7 @@
 
 <script>
 
-    $.get("http://0.0.0.0:9090/met-office", function (data) {
+    $.get("http://127.0.0.1:9090/met-office", function (data) {
 
         /*
         Met Office Code to ensure date formatting is correct
