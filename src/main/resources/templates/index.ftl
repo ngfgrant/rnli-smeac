@@ -342,7 +342,7 @@
                 <h5 id="f_tx"></h5>
                 <p>
                     <span id="f_w"></span>
-                    <span if="f_ss"></span>
+                    <span id="f_ss"></span>
                     <span id="f_wt"></span>
                     <span id="f_v"></span>
                 </p>
@@ -352,12 +352,11 @@
                 <h5 id="o_tx"></h5>
                 <p>
                     <span id="o_w"></span>
-                    <span if="o_ss"></span>
+                    <span id="o_ss"></span>
                     <span id="o_wt"></span>
                     <span id="o_v"></span>
                 </p>
             </div>
-
 
         </div>
     </div>
