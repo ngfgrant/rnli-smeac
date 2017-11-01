@@ -161,7 +161,7 @@
                 <li>Boat Kit / PPE</li>
                 <li>Navigation</li>
                 <li>Communication</li>
-                <li>Weather Breifing</li>
+                <li>Weather Briefing</li>
                 <li>Launch</li>
                 <li>Other</li>
             </ul>
@@ -338,7 +338,7 @@
 
             <h4 id="h"></h4>
 
-            <div id="currentForcast">
+            <div id="currentForecast">
                 <h5 id="f_tx"></h5>
                 <p>
                     <span id="f_w"></span>
@@ -348,7 +348,7 @@
                 </p>
             </div>
 
-            <div id="futureForcast">
+            <div id="futureForecast">
                 <h5 id="o_tx"></h5>
                 <p>
                     <span id="o_w"></span>

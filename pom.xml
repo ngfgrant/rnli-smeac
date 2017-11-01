@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rnlismeac</groupId>
     <artifactId>rnlismeac</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.6-SNAPSHOT</version>
     <name>rnlismeac</name>
     <packaging>jar</packaging>
     <url>http://maven.apache.org</url>
@@ -76,6 +76,8 @@
             <groupId>com.rnlismeac</groupId>
             <artifactId>nexmo</artifactId>
             <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/nexmo-sdk.jar</systemPath>
         </dependency>
 
         <dependency>

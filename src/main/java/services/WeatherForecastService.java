@@ -20,7 +20,7 @@ public class WeatherForecastService {
 
 
     public String getInshoreWeather() throws Exception {
-        URL website = new URL("http://www.metoffice.gov.uk/public/data/CoreProductCache/InshoreWatersForecast/Latest?concise");
+        URL website = new URL("https://www.metoffice.gov.uk/public/data/CoreProductCache/InshoreWatersForecast/Latest?concise");
         URLConnection connection = website.openConnection();
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(
@@ -38,7 +38,7 @@ public class WeatherForecastService {
     }
 
     public Document getMetOfficeInshoreForecastXML() throws Exception {
-        URL url = new URL("http://www.metoffice.gov.uk/public/data/CoreProductCache/InshoreWatersForecast/Latest?concise");
+        URL url = new URL("https://www.metoffice.gov.uk/public/data/CoreProductCache/InshoreWatersForecast/Latest?concise");
         URLConnection connection = url.openConnection();
         Document doc = parseXML(connection.getInputStream());
         return doc;
