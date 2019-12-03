@@ -1,8 +1,6 @@
 package pager;
 
-import model.Contact;
 import model.PagerMessage;
-import services.SmsService;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -30,7 +28,6 @@ public class UdpServer {
                 PagerMessage page = new PagerMessage(setTimestamp(), fullPagerMessage);
                 if (pageIsAnApprovedMessage(page)) {
                     addToPagerMessageList(page, pagerMessage);
-                    sendSMSMessages(page);
                     sendData = fullPagerMessage.getBytes();
                     System.out.println(fullPagerMessage);
                 }
@@ -74,11 +71,6 @@ public class UdpServer {
     private Timestamp setTimestamp() {
         java.util.Date date = new java.util.Date();
         return new Timestamp(date.getTime());
-    }
-
-    private void sendSMSMessages(PagerMessage pagerMessage) throws Exception {
-        SmsService smsService = new SmsService();
-        smsService.SendSMS(Contact.contactList, pagerMessage, false);
     }
 
     private void addToPagerMessageList(PagerMessage page, PagerMessage pagerMessage) {

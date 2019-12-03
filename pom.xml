@@ -69,17 +69,6 @@
             <version>1.7.21</version>
         </dependency>
 
-
-        <!-- for nexmo -->
-
-        <dependency>
-            <groupId>com.rnlismeac</groupId>
-            <artifactId>nexmo</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/nexmo-sdk.jar</systemPath>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.directory.studio</groupId>
             <artifactId>org.apache.commons.codec</artifactId>
