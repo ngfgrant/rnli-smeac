@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import model.AdministrationItem;
-import model.Contact;
 import model.PagerMessage;
 import org.w3c.dom.Document;
 import pager.UdpServer;
@@ -39,8 +38,6 @@ public class Main {
         /*
         Config
          */
-        Contact contact = new Contact("Niall Grant", "447969848782");
-        Contact.contactList.add(contact);
         staticFileLocation("/templates");
         final Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/");
@@ -81,19 +78,6 @@ public class Main {
         });
 
 
-        get("/contact", (request, response) -> {
-            StringWriter writer = new StringWriter();
-            try {
-                Template resultTemplate = configuration.getTemplate("templates/contact.ftl");
-
-                resultTemplate.process(null, writer);
-            } catch (Exception e) {
-                halt(500);
-            }
-            return writer;
-        });
-
-
         // Gets all available admin resources (ids)
         get("/admin", (request, response) -> {
             response.status(200);
@@ -114,19 +98,6 @@ public class Main {
             return tempAdministrationItem.getId();
         });
 
-        post("/contact", (request, response) -> {
-            String name = request.queryParams("name");
-            String number = request.queryParams("number");
-            Contact newContact = new Contact(name, number);
-            Contact.contactList.add(newContact);
-            for (Contact tempContact : Contact.contactList) {
-                System.out.println(tempContact.getName());
-                System.out.println(tempContact.getPhoneNumber() + "\n");
-            }
-            response.status(201); // 201 Created
-            response.redirect("/");
-            return newContact.getName();
-        });
 
         put("/admin/:id", (request, response) -> {
             String id = request.params(":id");

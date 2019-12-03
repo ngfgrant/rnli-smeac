@@ -312,18 +312,6 @@
             <iframe id="tides" name="tides"
                     src="http://www.bbc.co.uk/weather/coast_and_sea/tide_tables/7/223#tide-details"
                     scrolling="no" frameborder="0" width="100%" height="360"></iframe>
-            <!--
-            <iframe name="pressureChart" id="pressureChart" src="http://www.metoffice.gov.uk/public/weather/surface-pressure/#wxMain" scrolling="no" frameborder="0" width="100%" height="810"></iframe>
-            -->
-            <!--
-                <iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#iw2" scrolling="no" frameborder="0" width="370" height="360"></iframe>
-            -->
-            <!--
-                <iframe src="http://www.metoffice.gov.uk/public/weather/marine-inshore-waters/#inshoreWatersGeneralSection" scrolling="no" frameborder="0" width="380" height="150"></iframe>
-            -->
-
-            <!-- http://www.metoffice.gov.uk/public/weather/forecast/gcynfjhev#fcContent -->
-
         </div>
     </div>
 
