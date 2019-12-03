@@ -175,14 +175,15 @@ public class Main {
         });
 
         get("/refreshMessages", (request, response) -> {
-            StringBuilder htmlBuilder = new StringBuilder();
-            htmlBuilder.append("<h2> <span class='blink_me red'>");
-            htmlBuilder.append(pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getAlpha())
-                    .append("</span> - <span class='red'>")
-                    .append(pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getTimestampFormatted())
-                    .append(" (Local) </span></h2>");
-
-            return htmlBuilder.toString();
+            try {
+                return "<h2> <span class='blink_me red'>" +
+                        pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getAlpha() +
+                        "</span> - <span class='red'>" +
+                        pagerMessage.pagerMessages.get(pagerMessage.pagerMessages.size() - 1).getTimestampFormatted() +
+                        " (Local) </span></h2>";
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                return "<h1 style=\"color: blue;\">No Recent Launches</h1>";
+            }
         });
 
         UdpServer udpServer = new UdpServer();

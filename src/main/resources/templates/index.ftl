@@ -95,11 +95,7 @@
 <!-- Time and Messages -->
 <div class="row">
     <div class="col-md-4">
-        <div id="pager">
-        <#if !pagerMessage?has_content>
-            <h1 style="color: blue;">No Recent Launches</h1>
-        </#if>
-        </div>
+        <div id="pager"></div>
         <a href="/clearPagerMessages">Clear Messages</a>
     </div>
 
