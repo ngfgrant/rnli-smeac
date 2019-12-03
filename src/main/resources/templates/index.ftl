@@ -305,9 +305,14 @@
         <h1><u>Weather (Local) &amp; Tides (UTC)</u></h1>
 
         <div>
-            <iframe id="tides" name="tides"
-                    src="http://www.bbc.co.uk/weather/coast_and_sea/tide_tables/7/223#tide-details"
-                    scrolling="no" frameborder="0" width="100%" height="360"></iframe>
+            <script type="text/javascript">
+                var tt_border = '0px solid #fff';
+                var tt_bgnd   = '#ffffff';
+                var tt_font   = 'normal 18px arial,sans-serif';
+                var tt_font2  =	'bold 18px arial,sans-serif';
+                var tt_width  = '100%';
+            </script>
+            <script src="https://www.tidetimes.org.uk/fidra-tide-times.js" type="text/javascript"></script>
         </div>
     </div>
 
